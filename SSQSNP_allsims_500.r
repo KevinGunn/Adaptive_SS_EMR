@@ -237,7 +237,7 @@ double_cv.ks0 <- function(Yt.in , x.in , const_in, prop_score){
 
 # Influence Functions
 # IF for SSQ-SNP.
-IF_sd <- function(XtX.inv,X,Y,A,mv,prop ){
+IF_se <- function(XtX.inv,X,Y,A,mv,prop ){
   
   #prop1 vector of propensity scores for patients assigned to trt 1
   #prop0 vector of propensity scores for patients assigned to trt 0
@@ -271,7 +271,7 @@ IF_sd <- function(XtX.inv,X,Y,A,mv,prop ){
 }
 
 # IF for TR-OLS.
-IF_OLS_sd <- function(XtX.inv,X,Yt,bx.in ){
+IF_OLS_se <- function(XtX.inv,X,Yt,bx.in ){
   
   #prop1 vector of propensity scores for patients assigned to trt 1
   #prop0 vector of propensity scores for patients assigned to trt 0
@@ -569,18 +569,18 @@ Sim_OTR <- function(n , N , p=2, model = "SL" ,lambda=1,beta=NULL,g=NULL,num.sim
     ####################################################################################################
     
     print(beta.CX_ls)
-    IF.CXls_sd = IF_sd(GammaInv, X.in, Y.in, A.in, mv.input,prop.in )
+    IF.CXls_sd = IF_se(GammaInv, X.in, Y.in, A.in, mv.input,prop.in )
     print(IF.CXls_sd)
     
     IF.CXls_mat[sim,] = IF.CXls_sd
     
-    IF.RF_sd = IF_sd(GammaInv, X.in, Y.in, A.in, RF.in, prop.in )
+    IF.RF_sd = IF_se(GammaInv, X.in, Y.in, A.in, RF.in, prop.in )
     IF.RF_mat[sim,] = IF.RF_sd
     print(beta.CX_RF)
     print(IF.RF_sd)
     
     X.L = as.matrix(cbind(rep(1,length(Yt)),X.label))
-    IF.OLS_sd = IF_OLS_sd(GammaInv_n, X.L, Yt=Yt, bx.in = Reg.OLS$fitted.values )
+    IF.OLS_sd = IF_OLS_se(GammaInv_n, X.L, Yt=Yt, bx.in = Reg.OLS$fitted.values )
     IF.OLS_mat[sim,] = IF.OLS_sd
     
     ##############################################################

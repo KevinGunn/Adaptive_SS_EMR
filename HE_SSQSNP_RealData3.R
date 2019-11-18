@@ -248,7 +248,7 @@ double_cv.ks0 <- function(Yt.in , x.in , const_in, prop_score){
 }
 
 # Influence Function
-IF_sd <- function(XtX.inv,X,Y,A,mv,prop ){
+IF_se <- function(XtX.inv,X,Y,A,mv,prop ){
   
   #prop1 vector of propensity scores for patients assigned to trt 1
   #prop0 vector of propensity scores for patients assigned to trt 0
@@ -282,7 +282,7 @@ IF_sd <- function(XtX.inv,X,Y,A,mv,prop ){
   return(SE)
 }
 
-IF_ols_sd <- function(XtX.inv,X,Yt,mv ){
+IF_OLS_se <- function(XtX.inv,X,Yt,mv ){
   
   p = dim(XtX.inv)[2]
   varm = matrix(0,ncol=p,nrow=p)
@@ -302,7 +302,7 @@ IF_ols_sd <- function(XtX.inv,X,Yt,mv ){
   return(SE)
 }
 
-full_IF_ols_sd <- function(XtX.inv,X,Yt,mv ){
+full_IF_OLS_se <- function(XtX.inv,X,Yt,mv ){
   
   p = dim(XtX.inv)[2]
   varm = matrix(0,ncol=p,nrow=p)
@@ -444,14 +444,14 @@ trt_xtx = t(as.matrix(X.trt)) %*% as.matrix(X.trt) / dim(X.trt)[1]
 Lambda_trt_inv = solve(trt_xtx)
 
 # IF estimation
-IF_sd_OLS <- full_IF_ols_sd(Lambda_trt_inv, X.trt, -Yt, Lin_Reg$fitted.values)
-print(IF_sd_OLS)
+IF_se_OLS <- full_IF_OLS_se(Lambda_trt_inv, X.trt, -Yt, Lin_Reg$fitted.values)
+print(IF_se_OLS)
 
 # p-value calculation
 #pvalue2sided=2*pnorm(-abs(z))
 
-z = Lin_Reg$coefficients / IF_sd_OLS
-pvalue_tr = 2*pnorm(-abs(Lin_Reg$coefficients / IF_sd_OLS))
+z = Lin_Reg$coefficients / IF_se_OLS
+pvalue_tr = 2*pnorm(-abs(Lin_Reg$coefficients / IF_se_OLS))
 
 # Correlation of covariance matrix.
 cor(X.trt[,-1])
@@ -470,14 +470,14 @@ trt_xtx2 = t(as.matrix(X.trt2)) %*% as.matrix(X.trt2) / dim(X.trt2)[1]
 Lambda_trt_inv2 = solve(trt_xtx2)
 
 # IF estimation
-IF_sd_OLS2 <- full_IF_ols_sd(Lambda_trt_inv2, X.trt2, -Yt, Lin_Reg2$fitted.values)
-print(IF_sd_OLS2)
+IF_se_OLS2 <- full_IF_OLS_se(Lambda_trt_inv2, X.trt2, -Yt, Lin_Reg2$fitted.values)
+print(IF_se_OLS2)
 
 # p-value calculation
 #pvalue2sided=2*pnorm(-abs(z))
 
-z = Lin_Reg2$coefficients / IF_sd_OLS2
-pvalue_tr2 = 2*pnorm(-abs(Lin_Reg2$coefficients / IF_sd_OLS2))
+z = Lin_Reg2$coefficients / IF_se_OLS2
+pvalue_tr2 = 2*pnorm(-abs(Lin_Reg2$coefficients / IF_se_OLS2))
 pvalue_tr2
 
 # Correlation of covariance matrix.
@@ -631,30 +631,30 @@ Lambda_all_inv = solve(full_xtx)
 mv1 = double_cv.ks1(-Y_A1, X.L1, hc1, prop1)
 mv0 = double_cv.ks0(-Y_A0, X.L0, hc0, 1-prop0)
 
-IF_sd_CXls = IF_sd(Lambda_all_inv, X.L, -Y.if, trt_ind, c(mv0, mv1) , prop )
-print(IF_sd_CXls)
+IF_se_CXls = IF_se(Lambda_all_inv, X.L, -Y.if, trt_ind, c(mv0, mv1) , prop )
+print(IF_se_CXls)
 
-IF_sd_OLS = IF_ols_sd(Lambda_all_inv, X.L, -Yt, Lin_Reg$fitted.values)
-print(IF_sd_OLS)
+IF_se_OLS = IF_OLS_se(Lambda_all_inv, X.L, -Yt, Lin_Reg$fitted.values)
+print(IF_se_OLS)
 
 # p-value calculation
 #pvalue2sided=2*pnorm(-abs(z))
 
-beta.CX_ls / IF_sd_CXls
-pvalue_ss = 2*pnorm(-abs(beta.CX_ls / IF_sd_CXls))
+beta.CX_ls / IF_se_CXls
+pvalue_ss = 2*pnorm(-abs(beta.CX_ls / IF_se_CXls))
 
-Lin_Reg$coefficients / IF_sd_OLS
-pvalue_tr = 2*pnorm(-abs(Lin_Reg$coefficients / IF_sd_OLS))
+Lin_Reg$coefficients / IF_se_OLS
+pvalue_tr = 2*pnorm(-abs(Lin_Reg$coefficients / IF_se_OLS))
 
 # RE
-IF_sd_OLS^2 / IF_sd_CXls^2
+IF_se_OLS^2 / IF_se_CXls^2
 
 #CI
-beta.CX_ls + 1.96*IF_sd_CXls
-beta.CX_ls - 1.96*IF_sd_CXls
+beta.CX_ls + 1.96*IF_se_CXls
+beta.CX_ls - 1.96*IF_se_CXls
 
-beta.Yt + 1.96*IF_sd_OLS
-beta.Yt - 1.96*IF_sd_OLS
+beta.Yt + 1.96*IF_se_OLS
+beta.Yt - 1.96*IF_se_OLS
 
 # output of p-values
 pvalue_ss
@@ -716,11 +716,11 @@ sum(OLS_trt_full*(1-SS_trt_onlytrt))
 wilcox.test(trt_set_in$mean_heart_rate,unlabeled_ds_int$mean_heart_rate)
 
 beta.Yt.2
-IF_sd_OLS2
+IF_se_OLS2
 pvalue_tr2
 
 
-IF_sd_OLS^2 / IF_sd_CXls^2
+IF_se_OLS^2 / IF_se_CXls^2
 
 pvalue_ss
 

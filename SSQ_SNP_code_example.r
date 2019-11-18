@@ -233,7 +233,7 @@ double_cv.ks0 <- function(Yt.in , x.in , const_in, prop_score){
 ###########################################################################################
 
 # Influence Functions
-IF_sd <- function(XtX.inv,X,Y,A,mv,prop ){
+IF_se <- function(XtX.inv,X,Y,A,mv,prop ){
   
   #prop1 vector of propensity scores for patients assigned to trt 1
   #prop0 vector of propensity scores for patients assigned to trt 0
@@ -265,7 +265,7 @@ IF_sd <- function(XtX.inv,X,Y,A,mv,prop ){
   return(SE)
 }
 
-IF_OLS_sd <- function(XtX.inv,X,Yt,bx.in ){
+IF_OLS_se <- function(XtX.inv,X,Yt,bx.in ){
   
   #prop1 vector of propensity scores for patients assigned to trt 1
   #prop0 vector of propensity scores for patients assigned to trt 0
@@ -537,13 +537,13 @@ alpha = rep(c(0.75,0.75),floor(p/2))
     # print out iterations.
     # Commented out for now.  
     #print(beta.CX_ls)
-    IF.CXls_sd = IF_sd(GammaInv, X.in, Y.in, A.in, mv.input,prop.in )
+    IF.CXls_sd = IF_se(GammaInv, X.in, Y.in, A.in, mv.input,prop.in )
     #print(IF.CXls_sd)
 
     IF.CXls_mat[sim,] = IF.CXls_sd
     
     X.L = as.matrix(cbind(rep(1,length(Yt)),X.label))
-    IF.OLS_sd = IF_OLS_sd(GammaInv_n, X.L, Yt=Yt, bx.in = Reg.OLS$fitted.values )
+    IF.OLS_sd = IF_OLS_se(GammaInv_n, X.L, Yt=Yt, bx.in = Reg.OLS$fitted.values )
     IF.OLS_mat[sim,] = IF.OLS_sd
     
     ##############################################################
