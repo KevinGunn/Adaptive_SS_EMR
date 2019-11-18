@@ -10,16 +10,21 @@ for the regression coefficients using the variance estimator explained in Sectio
 
 Additionally, the R packages MASS and RandomForest may need to be installed to run code for the simulated data. 
 
+A description of the R functions used can be found below.
+
+#### KS_2D_Gauss: 
+Performs kernel smoothing on Y with 2 covariates and outputs a vector for imputed data.  
+
+#### cv.h:
+Obtains the bandwidth, h, used in the kernel smoothing function, KS_2D_Gauss.
+
+#### hlscv.ks:
+Estimates theta_1 and theta_0 and then predicts missing response with Q(x,a,theta).
+
+#### double_cv.ks:
+Performs double cross validation which is used to get an estimator for the variance of the parameters, beta.
+
+#### IF_se:
 
 
-##### KS_2D_Gauss 
-
-##### cv.h
-
-##### hlscv.ks
-
-##### double_cv.ks 
-
-##### IF_se
-
-##### IF_OLS_se
+#### IF_OLS_se
