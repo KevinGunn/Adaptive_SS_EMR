@@ -24,7 +24,7 @@ HE_dataset_full_in <- read_csv("EMR-research/SQL/HE_MY_CODE/HYPO_FINAL_DS.csv")
 
 #########################################################################################
 
-#KS_2D_Gauss performs kernel smoothing on Yt and outputs a vector for imputed data.  
+#KS_2D_Gauss performs kernel smoothing on Y and outputs a vector for imputed data.  
 KS_2D_Gauss = function(Yt.v, X_impute , X_label, const=c(2,2)){ 
   
   gauss <- function(x) 1/sqrt(2*pi) * exp(-(x^2)/2)
@@ -49,7 +49,7 @@ KS_2D_Gauss = function(Yt.v, X_impute , X_label, const=c(2,2)){
   return(C_np_impute)
 }
 
-#CV1 function - use directly with KS_2D_Gauss function.
+#CV.h function - use directly with KS_2D_Gauss function.
 cv.h <- function(Yt.in , x.in , seq.c){
   
   n = length(Yt.in)

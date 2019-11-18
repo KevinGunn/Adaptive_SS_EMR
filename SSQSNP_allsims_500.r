@@ -11,7 +11,7 @@ set.seed(12345)
 
 #########################################################################################
 #########################################################################################
-#KS_2D_Gauss performs kernel smoothing on Yt and outputs a vector for imputed data.  
+#KS_2D_Gauss performs kernel smoothing on Y and outputs a vector for imputed data.  
 KS_2D_Gauss = function(Yt.v, X_impute , X_label, const=2){ 
   
   gauss <- function(x) 1/sqrt(2*pi) * exp(-(x^2)/2)
@@ -36,7 +36,7 @@ KS_2D_Gauss = function(Yt.v, X_impute , X_label, const=2){
   return(C_np_impute)
 }
 
-#CV1 function - use directly with KS_2D_Gauss function.
+#CV.h function - use directly with KS_2D_Gauss function.
 cv.h <- function(Yt.in , x.in , seq.c){
   
   n = length(Yt.in)
