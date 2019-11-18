@@ -25,6 +25,8 @@ Estimates theta_1 and theta_0 and then predicts missing response with Q(x,a,thet
 Performs double cross validation which is used to get an estimator for the variance of the parameters, beta.
 
 #### IF_se:
+Estimates the standard error for the parameters in the semi-supervised technique using influence functions.
 
+#### IF_OLS_se:
+Estimates the standard error for the parameters in the transformed response OLS method using influence functions.
 
-#### IF_OLS_se
