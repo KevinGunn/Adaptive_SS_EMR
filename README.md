@@ -10,3 +10,16 @@ for the regression coefficients using the variance estimator explained in Sectio
 
 Additionally, the R packages MASS and RandomForest may need to be installed to run code for the simulated data. 
 
+
+
+### KS_2D_Gauss 
+
+### cv.h
+
+### hlscv.ks
+
+### double_cv.ks 
+
+### IF_se
+
+### IF_OLS_se
