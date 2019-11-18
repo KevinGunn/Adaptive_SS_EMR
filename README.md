@@ -12,14 +12,14 @@ Additionally, the R packages MASS and RandomForest may need to be installed to r
 
 
 
-### KS_2D_Gauss 
+##### KS_2D_Gauss 
 
-### cv.h
+##### cv.h
 
-### hlscv.ks
+##### hlscv.ks
 
-### double_cv.ks 
+##### double_cv.ks 
 
-### IF_se
+##### IF_se
 
-### IF_OLS_se
+##### IF_OLS_se
